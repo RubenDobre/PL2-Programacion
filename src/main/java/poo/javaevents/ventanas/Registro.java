@@ -4,8 +4,21 @@
  */
 package poo.javaevents.ventanas;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+import javax.swing.border.LineBorder;
+import poo.javaevents.clases.Cliente;
+import poo.javaevents.clases.Direccion;
+import poo.javaevents.clases.TarjetaCredito;
 
 /**
  *
@@ -18,6 +31,26 @@ public class Registro extends javax.swing.JFrame {
      */
     public Registro() {
         initComponents();
+        
+        // Obtener la fecha actual (solo mes y año)
+        LocalDate localDate = LocalDate.now().withDayOfMonth(1); // Primer día del mes actual
+        Date fechaActual = Date.from(localDate.
+                                       atStartOfDay(ZoneId.
+                                       systemDefault()).
+                                       toInstant());
+
+        // Crear el modelo con límite inferior en la fecha actual
+        SpinnerDateModel modelo = new SpinnerDateModel(
+            fechaActual, // valor inicial
+            fechaActual, // fecha mínima 
+            null,        // sin límite superior
+            Calendar.MONTH // incrementos por mes
+        );
+        
+        // Establecer un editor para el JSpinner con el formato de fecha adecuado
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(selectorFechaCaducidad, "MM/yyyy");
+        selectorFechaCaducidad.setEditor(editor);
+        editor.getTextField().setEditable(false);
     }
 
     /**
@@ -29,6 +62,8 @@ public class Registro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         campoCorreo = new javax.swing.JTextField();
         etiquetaNombre = new javax.swing.JLabel();
@@ -44,7 +79,7 @@ public class Registro extends javax.swing.JFrame {
         etiquetaDireccion = new javax.swing.JLabel();
         etiquetaCalle = new javax.swing.JLabel();
         etiquetaCiudad = new javax.swing.JLabel();
-        etiquetaNumCiudad = new javax.swing.JLabel();
+        etiquetaNumCalle = new javax.swing.JLabel();
         campoCalle = new javax.swing.JTextField();
         campoCiudad = new javax.swing.JTextField();
         campoCodPostal = new javax.swing.JTextField();
@@ -53,12 +88,19 @@ public class Registro extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         selectorFechaCaducidad = new javax.swing.JSpinner();
         campoNumTarjeta = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        etiquetaNombreTitular = new javax.swing.JLabel();
         etiquetaNumTarjeta = new javax.swing.JLabel();
         etiquetaInfoTarjeta = new javax.swing.JLabel();
         campoNombreTitular = new javax.swing.JTextField();
         etiquetaFechaCaducidad = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        botonRegistro = new javax.swing.JButton();
+
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel4.setText("*");
+
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel2.setText("*");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,7 +126,7 @@ public class Registro extends javax.swing.JFrame {
 
         etiquetaTelefono.setText("Teléfono");
 
-        etiquetaClave.setText("Clave");
+        etiquetaClave.setText("Clave (8-64 caracteres)");
 
         campoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,7 +186,7 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(campoCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         etiquetaDireccion.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -154,7 +196,7 @@ public class Registro extends javax.swing.JFrame {
 
         etiquetaCiudad.setText("Ciudad");
 
-        etiquetaNumCiudad.setText("Número");
+        etiquetaNumCalle.setText("Número");
 
         campoCodPostal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,7 +218,7 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(campoCalle))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(etiquetaNumCiudad)
+                    .addComponent(etiquetaNumCalle)
                     .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,7 +240,7 @@ public class Registro extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(etiquetaCalle)
-                    .addComponent(etiquetaNumCiudad)
+                    .addComponent(etiquetaNumCalle)
                     .addComponent(etiquetaCiudad)
                     .addComponent(etiquetaCodPostal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -207,10 +249,12 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoCodPostal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jLabel1.setText("Nombre del titular");
+        selectorFechaCaducidad.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1747683262255L), null, null, java.util.Calendar.MONTH));
+
+        etiquetaNombreTitular.setText("Nombre del titular");
 
         etiquetaNumTarjeta.setText("Número de tarjeta");
 
@@ -228,7 +272,7 @@ public class Registro extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
+                            .addComponent(etiquetaNombreTitular)
                             .addComponent(campoNombreTitular, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +294,7 @@ public class Registro extends javax.swing.JFrame {
                 .addComponent(etiquetaInfoTarjeta)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(etiquetaNombreTitular)
                     .addComponent(etiquetaNumTarjeta)
                     .addComponent(etiquetaFechaCaducidad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -258,17 +302,28 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(campoNombreTitular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoNumTarjeta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(selectorFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("JavaEvents");
 
+        botonRegistro.setText("Registrarse");
+        botonRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -277,9 +332,9 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(74, 74, 74))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,17 +343,37 @@ public class Registro extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(48, 48, 48)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonRegistro)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void aplicarColorATodosLosCampos(Container container, Color color) {
+        // Cambia el color a todos los JTextField de un contenedor
+        for (Component comp : container.getComponents()) {
+            if (comp instanceof JTextField) {
+                ((JTextField) comp).setBorder(new LineBorder(color, 1));
+            }
+        }
+    }
+    
+    private void aplicarColorATodasLasEtiquetas(Container container, Color color) {
+        // Cambia el color a todos los JLabel de un contenedor
+        for (Component comp : container.getComponents()) {
+            if (comp instanceof JLabel) {
+                ((JLabel) comp).setForeground(color);
+            }
+        }
+    }
+    
     private void campoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoNombreActionPerformed
@@ -314,6 +389,214 @@ public class Registro extends javax.swing.JFrame {
     private void campoCodPostalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoCodPostalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoCodPostalActionPerformed
+
+    private void botonRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroActionPerformed
+        // Variable para saber si se ha producido alguna excepción y avisar al
+        // usuario antes de crear su cuenta
+        boolean excepcion = false;
+        
+        // Poner todo a su color original de nuevo por si se actualizan los campos
+        Color gris = new Color(171, 173, 179);
+        Color negro = new Color(40, 40, 40);
+        
+        aplicarColorATodosLosCampos(jPanel1, gris);
+        aplicarColorATodosLosCampos(jPanel2, gris);
+        aplicarColorATodosLosCampos(jPanel3, gris);
+        
+        aplicarColorATodasLasEtiquetas(jPanel1, negro);
+        aplicarColorATodasLasEtiquetas(jPanel2, negro);
+        aplicarColorATodasLasEtiquetas(jPanel3, negro);
+        
+        // Crear las variables que pueden causar excepcion para poder usarlas
+        int telefono = 0;
+        int numeroCalle = 0;
+        int codigoPostal = 0;
+        long numeroTarjeta = 0;
+
+        // Obtener nombre
+        String nombre = campoNombre.getText();
+        
+        // Comprobar que el nombre tiene solo letras y espacios 
+        for (int i = 0; i < nombre.length(); i++) {
+            char c = nombre.charAt(i);
+            
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == ' '))) {
+                System.out.println("ERROR NOMBRE");
+                
+                campoNombre.setBorder(new LineBorder(Color.RED, 1));
+                
+                excepcion = true;
+            } 
+        }
+        
+        // Verificar si el campo nombre está vacío
+        if (nombre.length() == 0) {
+            System.out.println("ERROR NOMBRE VACIO");
+        
+            campoNombre.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        // Obtener correo electrónico
+        String correo = campoCorreo.getText();
+        
+        // Comprobar que el formato del correo es correcto
+        String[] listaCorreo1 = correo.split("@");
+        
+        // Mirar primero si contiene arroba
+        if (listaCorreo1.length == 2) {
+            String tipoCorreo = listaCorreo1[1];
+            String[] listaCorreo2 = tipoCorreo.split("\\.");
+            
+            // Después mirar si contiene punto
+            if (listaCorreo2.length != 2) {
+                System.out.println("ERROR CORREO");
+                
+                campoCorreo.setBorder(new LineBorder(Color.RED, 1));
+                
+                excepcion = true;
+            }
+        } else {
+            System.out.println("ERROR CORREO");
+            
+            campoCorreo.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        // Obtener clave
+        String clave = campoClave.getText();
+        
+        // Verificar si supera el mínimo o el máximo
+        if (clave.length() < 8) {
+            System.out.println("ERROR CLAVE CORTA");
+            
+            campoClave.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        if (clave.length() > 64) {
+            System.out.println("ERROR CLAVE LARGA");
+            
+            campoClave.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        // Obtener numero de telefono
+        try {
+            telefono = Integer.parseInt(campoTelefono.getText());
+        }
+        catch (NumberFormatException nfe) {
+            System.out.println("ERROR NUMERO TELEFONO");
+            
+            campoTelefono.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        // Obtener calle
+        String calle = campoCalle.getText();
+        
+        // Verificar si el campo calle es válido
+        if (calle.length() == 0) {
+            System.out.println("ERROR CALLE");
+            
+            campoCalle.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        // Obtener número de calle
+        try {
+            numeroCalle = Integer.parseInt(campoNumero.getText());
+        }
+        catch (NumberFormatException nfe) {
+            System.out.println("ERROR NUMERO CALLE");
+            
+            campoNumero.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        // Obtener ciudad
+        String ciudad = campoCiudad.getText();
+        
+        // Verificar si el campo ciudad es válido
+        if (ciudad.length() == 0) {
+            System.out.println("ERROR CIUDAD");
+            
+            campoCiudad.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        // Obtener código postal
+        try {
+            codigoPostal = Integer.parseInt(campoNumero.getText());
+        }
+        catch (NumberFormatException nfe) {
+            System.out.println("ERROR CODIGO POSTAL");
+            
+            campoCodPostal.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        // Obtener nombre del titular de la tarjeta
+        String nombreTitular = campoNombreTitular.getText();
+        
+        // Comprobar que el nombre tiene solo letras y espacios 
+        for (int i = 0; i < nombreTitular.length(); i++) {
+            char c = nombreTitular.charAt(i);
+            
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == ' '))) {
+                System.out.println("ERROR NOMBRE");
+                
+                campoNombreTitular.setBorder(new LineBorder(Color.RED, 1));
+                
+                excepcion = true;
+            }
+        }
+        
+        // Verificar si el campo nombre del titular está vacío
+        if (nombreTitular.length() == 0) {
+            System.out.println("ERROR NOMBRE TITULAR VACIO");
+            
+            campoNombreTitular.setBorder(new LineBorder(Color.RED, 1));
+                
+            excepcion = true;
+        }
+        
+        // Obtener el número de tarjeta
+        try {
+            numeroTarjeta = Long.parseLong(campoNumTarjeta.getText());
+        }
+        catch (NumberFormatException nfe) {
+            System.out.println("ERROR NUMERO TARJETA");
+            
+            campoNumTarjeta.setBorder(new LineBorder(Color.RED, 1));
+            
+            excepcion = true;
+        }
+        
+        // Obtener fecha de caducidad
+        Date fecha = (Date) selectorFechaCaducidad.getValue(); // Obtenemos java.util.Date
+        LocalDate fechaCaducidad = fecha.toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate(); // Convertimos a LocalDate
+        
+        // Comprobar si se ha producido alguna excepcion
+        if (!excepcion) {
+            Direccion d = new Direccion(calle, numeroCalle, ciudad, codigoPostal);
+            
+            TarjetaCredito t = new TarjetaCredito(nombreTitular, numeroTarjeta, fechaCaducidad);
+            
+            Cliente p = new Cliente(nombre, correo, clave, telefono, d, t, false);
+        } else System.out.println("Campos invalidos");
+    }//GEN-LAST:event_botonRegistroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,6 +634,7 @@ public class Registro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonRegistro;
     private javax.swing.JTextField campoCalle;
     private javax.swing.JTextField campoCiudad;
     private javax.swing.JTextField campoClave;
@@ -372,11 +656,13 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JLabel etiquetaInfoPersonal;
     private javax.swing.JLabel etiquetaInfoTarjeta;
     private javax.swing.JLabel etiquetaNombre;
-    private javax.swing.JLabel etiquetaNumCiudad;
+    private javax.swing.JLabel etiquetaNombreTitular;
+    private javax.swing.JLabel etiquetaNumCalle;
     private javax.swing.JLabel etiquetaNumTarjeta;
     private javax.swing.JLabel etiquetaTelefono;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
