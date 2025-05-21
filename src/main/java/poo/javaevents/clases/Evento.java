@@ -4,6 +4,7 @@
  */
 package poo.javaevents.clases;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author golde
  */
-public class Evento {
+public class Evento implements Serializable {
 
     private String titulo;
 

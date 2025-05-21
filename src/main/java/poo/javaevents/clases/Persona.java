@@ -1,6 +1,8 @@
 package poo.javaevents.clases;
 
-abstract class Persona {
+import java.io.Serializable;
+
+abstract class Persona implements Serializable {
 
     // Atributos
 

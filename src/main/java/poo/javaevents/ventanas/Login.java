@@ -5,7 +5,6 @@
 package poo.javaevents.ventanas;
 
 import java.awt.GridBagLayout;
-import java.util.Arrays;
 import poo.javaevents.clases.Cliente;
 import poo.javaevents.clases.Datos;
 
@@ -20,6 +19,9 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        
+        // Cargar los datos guardados
+        Datos.cargarTodo();
         
         System.out.println(getWidth());
         System.out.println(getHeight());

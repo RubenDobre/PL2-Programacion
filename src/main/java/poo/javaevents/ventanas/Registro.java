@@ -610,6 +610,9 @@ public class Registro extends javax.swing.JFrame {
             Cliente p = new Cliente(nombre, correo, clave, telefono, d, t, false);
             Datos.clientes.add(p);
             
+            // Guardar los datos
+            Datos.guardarClientes();
+            
             // Volver a abrir la ventana de login para que el usuario incie
             // sesión y cerrar la ventana actual
             Login l = new Login();

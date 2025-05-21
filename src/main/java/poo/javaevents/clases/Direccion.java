@@ -1,6 +1,8 @@
 package poo.javaevents.clases;
 
-public class Direccion {
+import java.io.Serializable;
+
+public class Direccion implements Serializable {
 
     // Atributos
     
