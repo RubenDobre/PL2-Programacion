@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.border.LineBorder;
 import poo.javaevents.clases.Cliente;
+import poo.javaevents.clases.Datos;
 import poo.javaevents.clases.Direccion;
 import poo.javaevents.clases.TarjetaCredito;
 
@@ -31,13 +32,13 @@ public class Registro extends javax.swing.JFrame {
      */
     public Registro() {
         initComponents();
+        // Hacer invisible el texto de campos inválidos
+        etiquetaCamposInvalidos.setVisible(false);
         
         // Obtener la fecha actual (solo mes y año)
         LocalDate localDate = LocalDate.now().withDayOfMonth(1); // Primer día del mes actual
-        Date fechaActual = Date.from(localDate.
-                                       atStartOfDay(ZoneId.
-                                       systemDefault()).
-                                       toInstant());
+        Date fechaActual = Date.from(localDate.atStartOfDay(
+                ZoneId.systemDefault()).toInstant());
 
         // Crear el modelo con límite inferior en la fecha actual
         SpinnerDateModel modelo = new SpinnerDateModel(
@@ -95,6 +96,7 @@ public class Registro extends javax.swing.JFrame {
         etiquetaFechaCaducidad = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         botonRegistro = new javax.swing.JButton();
+        etiquetaCamposInvalidos = new javax.swing.JLabel();
 
         jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("*");
@@ -316,6 +318,9 @@ public class Registro extends javax.swing.JFrame {
             }
         });
 
+        etiquetaCamposInvalidos.setForeground(new java.awt.Color(255, 0, 0));
+        etiquetaCamposInvalidos.setText("* Campos inválidos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -333,6 +338,8 @@ public class Registro extends javax.swing.JFrame {
                 .addGap(74, 74, 74))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(etiquetaCamposInvalidos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botonRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84))
         );
@@ -348,7 +355,9 @@ public class Registro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botonRegistro)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonRegistro)
+                    .addComponent(etiquetaCamposInvalidos))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
 
@@ -394,6 +403,7 @@ public class Registro extends javax.swing.JFrame {
         // Variable para saber si se ha producido alguna excepción y avisar al
         // usuario antes de crear su cuenta
         boolean excepcion = false;
+        etiquetaCamposInvalidos.setVisible(false);
         
         // Poner todo a su color original de nuevo por si se actualizan los campos
         Color gris = new Color(171, 173, 179);
@@ -590,12 +600,26 @@ public class Registro extends javax.swing.JFrame {
         
         // Comprobar si se ha producido alguna excepcion
         if (!excepcion) {
+            // Crear objeto con los datos de la dirección
             Direccion d = new Direccion(calle, numeroCalle, ciudad, codigoPostal);
             
+            // Crear objeto con los datos de la tarjeta de crédito
             TarjetaCredito t = new TarjetaCredito(nombreTitular, numeroTarjeta, fechaCaducidad);
             
+            // Crear objeto del cliente y guardarlo en Datos
             Cliente p = new Cliente(nombre, correo, clave, telefono, d, t, false);
-        } else System.out.println("Campos invalidos");
+            Datos.clientes.add(p);
+            
+            // Volver a abrir la ventana de login para que el usuario incie
+            // sesión y cerrar la ventana actual
+            Login l = new Login();
+            l.setVisible(true);
+            this.dispose();
+            
+        } else {
+            System.out.println("Campos invalidos");
+            etiquetaCamposInvalidos.setVisible(true);
+        }
     }//GEN-LAST:event_botonRegistroActionPerformed
 
     /**
@@ -646,6 +670,7 @@ public class Registro extends javax.swing.JFrame {
     private javax.swing.JTextField campoNumero;
     private javax.swing.JTextField campoTelefono;
     private javax.swing.JLabel etiquetaCalle;
+    private javax.swing.JLabel etiquetaCamposInvalidos;
     private javax.swing.JLabel etiquetaCiudad;
     private javax.swing.JLabel etiquetaClave;
     private javax.swing.JLabel etiquetaCodPostal;
