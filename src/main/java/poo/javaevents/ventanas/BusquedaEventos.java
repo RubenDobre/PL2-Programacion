@@ -140,7 +140,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
         etiquetaBuscarPor = new javax.swing.JLabel();
         tipoBusqueda = new javax.swing.JComboBox<>();
         botonBuscar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        etiquetaFiltro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,7 +173,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Flitro: Ninguno");
+        etiquetaFiltro.setText("Flitro: Ninguno");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,7 +187,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
                 .addGap(139, 139, 139)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(etiquetaFiltro)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,7 +215,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
                         .addComponent(tipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
-                .addComponent(jLabel1)
+                .addComponent(etiquetaFiltro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(82, Short.MAX_VALUE))
@@ -236,14 +236,17 @@ public class BusquedaEventos extends javax.swing.JFrame {
         switch (filtro) {
             case "Título":
                 eventosEncontrados = Buscador.buscarPorTitulo(campoBuscador.getText());
+                etiquetaFiltro.setText("Filtro: Título");
                 break;
 
             case "Tipo":
                 eventosEncontrados = Buscador.buscarPorTipo(campoBuscador.getText());
+                etiquetaFiltro.setText("Filtro: Tipo");
                 break;
                 
             case "Ciudad":
                 eventosEncontrados = Buscador.buscarPorCiudad(campoBuscador.getText());
+                etiquetaFiltro.setText("Filtro: Ciudad");
                 break;
         }
         
@@ -306,7 +309,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
     private javax.swing.JTextField buscador3;
     private javax.swing.JTextField campoBuscador;
     private javax.swing.JLabel etiquetaBuscarPor;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel etiquetaFiltro;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaEventos;
     private javax.swing.JComboBox<String> tipoBusqueda;
