@@ -16,7 +16,7 @@ public class Evento implements Serializable {
 
     private String titulo;
 
-    private String tipo;
+    private String tipo; // concierto, deporte, musical, teatro
 
     private Direccion direccion;
 

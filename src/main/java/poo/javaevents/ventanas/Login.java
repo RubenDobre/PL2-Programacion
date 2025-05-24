@@ -272,6 +272,9 @@ public class Login extends javax.swing.JFrame {
    
     private void botonRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroActionPerformed
         // Si se pulsa el botón de registrarse, se abre la ventana de registro
+        // Guardar también el correo del usuario para operaciones futuras
+        
+        String correoUsuarioActual = correo.getText();
         
         Registro r = new Registro();
         r.setVisible(true);

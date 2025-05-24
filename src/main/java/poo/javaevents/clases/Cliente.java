@@ -55,11 +55,11 @@ public class Cliente extends Persona implements Serializable {
         this.direccion = direccion;
     }
 
-    public int getTeléfono() {
+    public int getTelefono() {
         return telefono;
     }
 
-    public void setTeléfono(int telefono) {
+    public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
 
