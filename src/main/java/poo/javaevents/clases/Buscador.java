@@ -10,9 +10,9 @@ import java.util.ArrayList;
  *
  * @author golde
  */
-public class BuscadorEvento {
+public class Buscador {
 
-    public ArrayList buscarPorCiudad(String ciudad) {
+    public static ArrayList buscarPorCiudad(String ciudad) {
         // Método que busca los eventos que se dan en la ciudad introducida
         
         // Crear una lista para añadir los eventos encontrados
@@ -20,7 +20,7 @@ public class BuscadorEvento {
         
         // Iterar sobre la lista de eventos y ver en cuales coincide la ciudad
         for (Evento e: Datos.eventos) {
-            if (e.getDireccion().getCiudad().equals(ciudad)) {
+            if (e.getDireccion().getCiudad().toLowerCase().contains(ciudad.toLowerCase())) {
                 eventosEncontrados.add(e);
             }
         }
@@ -29,7 +29,7 @@ public class BuscadorEvento {
         return eventosEncontrados;
     }
     
-    public ArrayList buscarPorTipo(String tipo) {
+    public static ArrayList buscarPorTipo(String tipo) {
         // Método que busca los eventos por el tipo introducido
         
         // Crear una lista para aladir los eventos encontrados
@@ -37,7 +37,7 @@ public class BuscadorEvento {
         
         // Ver cuales tienen el tipo introducido
         for (Evento e: Datos.eventos) {
-            if (e.getTipo().equals(tipo)) {
+            if (e.getTipo().toLowerCase().contains(tipo.toLowerCase())) {
                 eventosEncontrados.add(e);
             }
         }
@@ -46,7 +46,7 @@ public class BuscadorEvento {
         return eventosEncontrados;
     }
     
-    public ArrayList buscarPorTitulo(String titulo) {
+    public static ArrayList buscarPorTitulo(String titulo) {
         // Método que busca los eventos en base al título introducido
         
         // Crear una lista para los eventos encontrados
@@ -54,7 +54,7 @@ public class BuscadorEvento {
         
         // Ver cuales coinciden con el titulo introducido
         for (Evento e: Datos.eventos) {
-            if (e.getTitulo().equals(titulo)) {
+            if (e.getTitulo().toLowerCase().contains(titulo.toLowerCase())) {
                 eventosEncontrados.add(e);
             }
         }
