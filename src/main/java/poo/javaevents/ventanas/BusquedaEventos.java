@@ -35,7 +35,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
                         LocalDateTime.of(2025, 6, 21, 21, 0)
                 )),
                 75.50,
-                "/recursos/coldplay.png",
+                "/src/main/recursos/imagenes/coldplay.jpg",
                 4.8
         ));
 
@@ -105,14 +105,19 @@ public class BusquedaEventos extends javax.swing.JFrame {
                 4.6
         ));
 
+        // Crear un modelo DefaultTableModel para poder añadir filas
         DefaultTableModel modelo = new DefaultTableModel(
                 new Object[]{"Título", "Tipo", "Ciudad"}, 0
         );
 
+        // Aplicar el modelo a la tabla creada
         tablaEventos.setModel(modelo);
+        
+        // Hacer las filas más altas y la fuente más grande
         tablaEventos.setRowHeight(30);
         tablaEventos.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 
+        // Añadir todos los eventos de la lista de Datos.eventos a la tabla
         for (Evento e : Datos.eventos) {
             Object[] fila = {
                 e.getTitulo(),
@@ -122,6 +127,10 @@ public class BusquedaEventos extends javax.swing.JFrame {
 
             modelo.addRow(fila);
         }
+        
+        // Copiar la lista de todos los eventos a eventosEncontrados por si el
+        // usuario no utiliza ningún filtro ni hace ninguna búsqueda
+        eventosEncontrados = (ArrayList<Evento>) Datos.eventos.clone();
     }
 
     /**
@@ -141,6 +150,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
         tipoBusqueda = new javax.swing.JComboBox<>();
         botonBuscar = new javax.swing.JButton();
         etiquetaFiltro = new javax.swing.JLabel();
+        botonDetalles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -175,6 +185,13 @@ public class BusquedaEventos extends javax.swing.JFrame {
 
         etiquetaFiltro.setText("Flitro: Ninguno");
 
+        botonDetalles.setText("Ver detalles");
+        botonDetalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonDetallesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -187,9 +204,6 @@ public class BusquedaEventos extends javax.swing.JFrame {
                 .addGap(139, 139, 139)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(etiquetaFiltro)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 781, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
@@ -200,7 +214,12 @@ public class BusquedaEventos extends javax.swing.JFrame {
                                 .addComponent(etiquetaBuscarPor)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(160, 160, 160))))
+                        .addGap(160, 160, 160))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(etiquetaFiltro)
+                            .addComponent(botonDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +237,9 @@ public class BusquedaEventos extends javax.swing.JFrame {
                 .addComponent(etiquetaFiltro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonDetalles)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -226,13 +247,17 @@ public class BusquedaEventos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
+        // Obtener el modelo de la tabla y borrar todas las filas
         DefaultTableModel modelo = ((DefaultTableModel) tablaEventos.getModel());
         modelo.setRowCount(0);
 
+        // Obtener el filtro aplicado
         String filtro = tipoBusqueda.getSelectedItem().toString();
-        
-        ArrayList<Evento> eventosEncontrados = new ArrayList<>();
 
+        // Borrar la lista de eventosEncontrados para llenarla con los nuevos
+        eventosEncontrados.clear();
+        
+        // Añadir los eventos encontrados
         switch (filtro) {
             case "Título":
                 eventosEncontrados = Buscador.buscarPorTitulo(campoBuscador.getText());
@@ -250,6 +275,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
                 break;
         }
         
+        // Añadir de nuevo los eventos a la tabla
         for (Evento e : eventosEncontrados) {
             Object[] fila = {
                 e.getTitulo(),
@@ -265,6 +291,44 @@ public class BusquedaEventos extends javax.swing.JFrame {
     private void tipoBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoBusquedaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tipoBusquedaActionPerformed
+
+    private void botonDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDetallesActionPerformed
+        // Obtener el modelo de la tabla
+        DefaultTableModel modelo = ((DefaultTableModel) tablaEventos.getModel());
+        
+        // Ver cual es el evento que tiene elejido el usuario
+        int filaElejida = tablaEventos.getSelectedRow(); // Fila seleccionada
+        eventoElejido = eventosEncontrados.get(filaElejida);
+        
+        // Crear una ventana que muestre los detalles del evento
+        DetallesEvento detallesEvento = new DetallesEvento();
+        detallesEvento.setLocationRelativeTo(this);
+        detallesEvento.setVisible(true);
+        
+        // Modificar los atributos de la ventana para que correspondan a los
+        // elementos del evento seleccionado
+        detallesEvento.setEtiquetaTitulo(eventoElejido.getTitulo());
+        
+        detallesEvento.setEtiquetaTipoEvento(eventoElejido.getTipo());
+        
+        String calle = eventoElejido.getDireccion().getCalle();
+        int numero = eventoElejido.getDireccion().getNumero();
+        String ciudad = eventoElejido.getDireccion().getCiudad();
+        int codPostal = eventoElejido.getDireccion().getCodPostal();
+        detallesEvento.setEtiquetaAtributosDireccion("Calle: " + calle + ", " +
+                numero + ". " + "Ciudad: " + ciudad + ", " + codPostal);
+        
+        detallesEvento.setHorarios(eventoElejido.getFechasYHoras());
+        
+        try { 
+            detallesEvento.setImagen(eventoElejido.getPortada());
+        } catch (Exception e) {
+            System.out.println("LA IMAGEN ESTÁ MAL");
+        }
+        
+        detallesEvento.setEventoElejido(eventoElejido);
+        System.out.println("be" + eventoElejido);
+    }//GEN-LAST:event_botonDetallesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,13 +364,17 @@ public class BusquedaEventos extends javax.swing.JFrame {
             }
         });
     }
+    
+    public Evento getEventoElejido() {
+        return eventoElejido;
+    }
 
+    private ArrayList<Evento> eventosEncontrados;
+    private Evento eventoElejido;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JavaEvents;
     private javax.swing.JButton botonBuscar;
-    private javax.swing.JTextField buscador1;
-    private javax.swing.JTextField buscador2;
-    private javax.swing.JTextField buscador3;
+    private javax.swing.JButton botonDetalles;
     private javax.swing.JTextField campoBuscador;
     private javax.swing.JLabel etiquetaBuscarPor;
     private javax.swing.JLabel etiquetaFiltro;

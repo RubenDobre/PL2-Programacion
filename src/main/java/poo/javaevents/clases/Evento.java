@@ -28,6 +28,8 @@ public class Evento implements Serializable {
 
     private double calificacion;
 
+    private ArrayList<Resenia> resenias;
+    
     public Evento(String titulo, String tipo, Direccion direccion, ArrayList<LocalDateTime> fechasYHoras, double precioEntrada, String portada, double calificacion) {
         this.titulo = titulo;
         this.tipo = tipo;
@@ -36,6 +38,7 @@ public class Evento implements Serializable {
         this.precioEntrada = precioEntrada;
         this.portada = portada;
         this.calificacion = calificacion;
+        this.resenias = new ArrayList<>();
     }
 
     public double getCalificacion() {
@@ -66,8 +69,12 @@ public class Evento implements Serializable {
         return fechasYHoras;
     }
 
-    public void addFechaYHora(ArrayList fechasYHoras) {
+    public void addFechaYHoras(ArrayList fechasYHoras) {
         this.fechasYHoras = fechasYHoras;
+    }
+    
+    public void addFechaYHora(LocalDateTime horario) {
+        this.fechasYHoras.add(horario);
     }
 
     public Direccion getDireccion() {
@@ -93,6 +100,23 @@ public class Evento implements Serializable {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
-
     
+    public void addResenia(Resenia resenia) {
+        this.resenias.add(resenia);
+    }
+    
+    // Otros métodos
+
+    /**
+     * Método para agregar una reseña a la lista de reseñas de la propia clase.
+     * 
+     * @param evento
+     * @param calificacion
+     * @param descripccion 
+     */
+    public void escribirResenia(Evento evento, int calificacion, String descripccion) {
+        Resenia r = new Resenia(evento, calificacion, descripccion); // Crear objeto de reseña
+        
+        resenias.add(r); // Añadir reseña a la lista
+    }
 }

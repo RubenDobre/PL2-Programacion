@@ -12,6 +12,14 @@ import java.util.ArrayList;
  */
 public class Buscador {
 
+    /**
+     * Método que devuelve una lista de eventos cuyo atributo direccion, y 
+     * dentro de direccion su atributo ciudad, contienen la cadena de caracteres
+     * introducida.
+     * 
+     * @param ciudad
+     * @return ArrayList
+     */
     public static ArrayList buscarPorCiudad(String ciudad) {
         // Método que busca los eventos que se dan en la ciudad introducida
         
@@ -29,6 +37,13 @@ public class Buscador {
         return eventosEncontrados;
     }
     
+    /**
+     * Método que devuelve una lista de eventos cuyo atributo tipo contiene la
+     * cadena de caracteres introducida por el usuario.
+     * 
+     * @param tipo
+     * @return ArrayList
+     */
     public static ArrayList buscarPorTipo(String tipo) {
         // Método que busca los eventos por el tipo introducido
         
@@ -46,6 +61,13 @@ public class Buscador {
         return eventosEncontrados;
     }
     
+    /**
+     * Método que devuelve una lista de eventos cuyo atributo titulo contiene la
+     * cadena de caracteres introducida por el usuario.
+     * 
+     * @param titulo
+     * @return ArrayList
+     */
     public static ArrayList buscarPorTitulo(String titulo) {
         // Método que busca los eventos en base al título introducido
         

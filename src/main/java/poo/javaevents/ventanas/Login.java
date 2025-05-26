@@ -258,7 +258,9 @@ public class Login extends javax.swing.JFrame {
                 Cliente clienteEncontrado = Datos.clientes.get(clienteActual);
 
                 if (clienteEncontrado.getClave().equals(textoClave)) {
-                    System.out.println("ABRIR VENTANA SIGUIENTE");
+                    BusquedaEventos busquedaEventos = new BusquedaEventos();
+                    
+                    busquedaEventos.setVisible(true);
                 } else {
                     claveIncorrecta.setVisible(true);
                 }

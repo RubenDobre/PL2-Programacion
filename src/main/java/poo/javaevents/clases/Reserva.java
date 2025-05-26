@@ -4,14 +4,17 @@
  */
 package poo.javaevents.clases;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author golde
  */
-public class Reserva {
+public class Reserva implements Serializable {
 
+    // Atributos
+    
     private Cliente cliente;
 
     private Evento evento;
@@ -24,6 +27,8 @@ public class Reserva {
 
     private LocalDateTime fechaReservada;
 
+    // Constructor
+    
     public Reserva(Cliente cliente, Evento evento, int numeroEntradas, double precioEntrada, LocalDateTime fechaReservada) {
         this.cliente = cliente;
         this.evento = evento;
@@ -33,6 +38,8 @@ public class Reserva {
         this.fechaReservada = fechaReservada;
     }
 
+    // Métodos get y set
+    
     public LocalDateTime getFechaReservada() {
         return fechaReservada;
     }
