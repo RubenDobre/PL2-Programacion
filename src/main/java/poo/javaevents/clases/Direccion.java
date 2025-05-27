@@ -57,5 +57,9 @@ public class Direccion implements Serializable {
         this.calle = calle;
     }
 
-    
+    @Override
+    public String toString() {
+        return calle+", " + numero+", " + ciudad+", " + codPostal ;
+    }
+   
 }

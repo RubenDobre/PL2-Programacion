@@ -4,6 +4,16 @@
  */
 package poo.javaevents.ventanas;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import javax.swing.table.DefaultTableModel;
+import poo.javaevents.clases.Cliente;
+import poo.javaevents.clases.Datos;
+import poo.javaevents.clases.Direccion;
+import poo.javaevents.clases.Evento;
+import poo.javaevents.clases.Reserva;
+
 /**
  *
  * @author lucia
@@ -15,6 +25,9 @@ public class Admin extends javax.swing.JFrame {
      */
     public Admin() {
         initComponents();
+        crearEvento.setVisible(false);
+        modificarEvento.setVisible(false);
+        borrarEvento.setVisible(false);
     }
 
     /**
@@ -27,22 +40,114 @@ public class Admin extends javax.swing.JFrame {
     private void initComponents() {
 
         panelMenu = new javax.swing.JPanel();
+        botonEventos = new javax.swing.JButton();
+        botonUsuarios = new javax.swing.JButton();
+        botonReservas = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaUsuarios = new javax.swing.JTable();
+        sinClientes = new javax.swing.JOptionPane();
+        crearEvento = new javax.swing.JButton();
+        modificarEvento = new javax.swing.JButton();
+        borrarEvento = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         panelMenu.setBackground(new java.awt.Color(0, 0, 255));
         panelMenu.setForeground(new java.awt.Color(0, 51, 255));
+        panelMenu.setPreferredSize(new java.awt.Dimension(72, 522));
+
+        botonEventos.setIcon(new javax.swing.ImageIcon("C:\\Users\\lucia\\Documents\\NetBeansProjects\\JavaEvents-PL2\\src\\imagenes\\calendario.png")); // NOI18N
+        botonEventos.setContentAreaFilled(false);
+        botonEventos.setFocusPainted(false);
+        botonEventos.setFocusTraversalPolicyProvider(true);
+        botonEventos.setMaximumSize(new java.awt.Dimension(50, 50));
+        botonEventos.setMinimumSize(new java.awt.Dimension(50, 50));
+        botonEventos.setPreferredSize(new java.awt.Dimension(50, 50));
+        botonEventos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEventosActionPerformed(evt);
+            }
+        });
+
+        botonUsuarios.setIcon(new javax.swing.ImageIcon("C:\\Users\\lucia\\Documents\\NetBeansProjects\\JavaEvents-PL2\\src\\imagenes\\usuario.png")); // NOI18N
+        botonUsuarios.setContentAreaFilled(false);
+        botonUsuarios.setPreferredSize(new java.awt.Dimension(50, 50));
+        botonUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonUsuariosActionPerformed(evt);
+            }
+        });
+
+        botonReservas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/reservaAdmin.png"))); // NOI18N
+        botonReservas.setContentAreaFilled(false);
+        botonReservas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonReservasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 62, Short.MAX_VALUE)
+            .addGroup(panelMenuLayout.createSequentialGroup()
+                .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonEventos, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonReservas))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
+            .addGroup(panelMenuLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(botonEventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Dirección", "VIP"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tablaUsuarios);
+
+        crearEvento.setText("Crear evento");
+        crearEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearEventoActionPerformed(evt);
+            }
+        });
+
+        modificarEvento.setText("Modificar evento");
+        modificarEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarEventoActionPerformed(evt);
+            }
+        });
+
+        borrarEvento.setText("Borrar evento");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("JavaEvents");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,16 +155,165 @@ public class Admin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 982, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(crearEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(modificarEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addComponent(borrarEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sinClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(268, 268, 268))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(405, 405, 405)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(406, 406, 406))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sinClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(165, 165, 165))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(crearEvento)
+                    .addComponent(modificarEvento)
+                    .addComponent(borrarEvento))
+                .addGap(12, 12, 12))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    //contador para el menu desplegable
+    
+    
+    private void botonEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEventosActionPerformed
+        // TODO add your handling code here:
+        crearEvento.setVisible(true);
+        modificarEvento.setVisible(true);
+        borrarEvento.setVisible(true);
+        DefaultTableModel modeloEvento = new DefaultTableModel(
+        new Object[]{"Título", "Tipo", "Ciudad"}, 0);
+        
+        tablaUsuarios.setModel(modeloEvento);
+        try{
+            Datos.cargarEventos();
+            ArrayList<Evento> eventos = Datos.eventos;
 
+            // Limpiar la tabla antes de agregar nuevos datos
+            modeloEvento.setRowCount(0);
+            
+            if (eventos.isEmpty()) {
+            throw new IllegalStateException("No hay eventos creados.");
+            }
+
+            // Rellenar la tabla con los datos de los usuarios
+            for (Evento ev : eventos) {
+                Direccion dir = ev.getDireccion();
+                modeloEvento.addRow(new Object[]{ev.getTitulo(), ev.getTipo(), dir.getCiudad()});  
+                
+            }
+            }
+        catch(IllegalStateException e){
+            sinClientes.showMessageDialog(this,
+            e.getMessage(),
+            "Error",
+            sinClientes.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_botonEventosActionPerformed
+
+    private void botonUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonUsuariosActionPerformed
+        // TODO add your handling code here:
+        crearEvento.setVisible(false);
+        modificarEvento.setVisible(false);
+        borrarEvento.setVisible(false);
+        DefaultTableModel modeloUsuario = new DefaultTableModel(
+        new Object[]{"Nombre", "Dirección", "VIP"}, 0);
+        
+        tablaUsuarios.setModel(modeloUsuario);
+        try{
+            Datos.cargarClientes();
+            ArrayList<Cliente> clientes = Datos.clientes;
+
+            // Limpiar la tabla antes de agregar nuevos datos
+            modeloUsuario.setRowCount(0);
+            
+            if (clientes.isEmpty()) {
+            throw new IllegalStateException("No hay clientes registrados.");
+            }
+
+            // Rellenar la tabla con los datos de los usuarios
+            for (Cliente c : clientes) {
+                if(c.isVIP() == true){
+                   modeloUsuario.addRow(new Object[]{c.getNombre(), c.getDireccion(), "Si"}); 
+                }
+                else{
+                   modeloUsuario.addRow(new Object[]{c.getNombre(), c.getDireccion(), "No"});  
+                }
+            }
+            }
+        catch(IllegalStateException e){
+            sinClientes.showMessageDialog(this,
+            e.getMessage(),
+            "Error",
+            sinClientes.ERROR_MESSAGE);
+    }//GEN-LAST:event_botonUsuariosActionPerformed
+}
+    private void crearEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearEventoActionPerformed
+        // TODO add your handling code here:
+        CrearEvento crearEvento = new CrearEvento();
+        crearEvento.setVisible(true);
+    }//GEN-LAST:event_crearEventoActionPerformed
+
+    private void modificarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarEventoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modificarEventoActionPerformed
+
+    private void botonReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReservasActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel modelo = new DefaultTableModel(
+        new Object[]{"Cliente", "Evento", "Número de entradas", "Precio", "Fecha"}, 0);
+        
+        tablaUsuarios.setModel(modelo);
+        try{
+            Datos.cargarReservas();
+            ArrayList<Reserva> reservas = Datos.reservas;
+            Collections.sort(reservas, Comparator.comparing(Reserva::getFechaReservada));
+
+            // Limpiar la tabla antes de agregar nuevos datos
+            modelo.setRowCount(0);
+            
+            if (reservas.isEmpty()) {
+            throw new IllegalStateException("No hay reservas registradas.");
+            }
+
+            // Rellenar la tabla con los datos de los usuarios
+           
+            for (Reserva r : reservas) {
+                Evento e = r.getEvento();
+                modelo.addRow(new Object[]{r.getCliente(), e.getTitulo(), r.getNumeroEntradas(), r.getPrecioTotal(), r.getFechaReservada()});  
+                
+            }
+            }
+        catch(IllegalStateException e){
+            sinClientes.showMessageDialog(this,
+            e.getMessage(),
+            "Error",
+            sinClientes.ERROR_MESSAGE);
+    }//GEN-LAST:event_botonReservasActionPerformed
+    }
     /**
      * @param args the command line arguments
      */
@@ -94,8 +348,19 @@ public class Admin extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton borrarEvento;
+    private javax.swing.JButton botonEventos;
+    private javax.swing.JButton botonReservas;
+    private javax.swing.JButton botonUsuarios;
+    private javax.swing.JButton crearEvento;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton modificarEvento;
     private javax.swing.JPanel panelMenu;
+    private javax.swing.JOptionPane sinClientes;
+    private javax.swing.JTable tablaUsuarios;
     // End of variables declaration//GEN-END:variables
 }

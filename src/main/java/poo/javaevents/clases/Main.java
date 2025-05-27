@@ -20,6 +20,10 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
+            ArrayList<Cliente> clientes = new ArrayList<>();
+            
+
+            Datos.guardarClientes();
             Direccion d = new Direccion("Callosa", 2, "Guadalajara", 19005);
 
             LocalDate f = LocalDate.now();
@@ -29,6 +33,7 @@ public class Main {
 
             Cliente c = new Cliente("Juan", "juan@gmail.com", "12345678", 611111111,
             d, t, false);
+            Datos.clientes.add(c);
 
             ArrayList<LocalDateTime> fechasYHoras = new ArrayList<>();
             LocalDateTime fh = LocalDateTime.now();
@@ -38,8 +43,9 @@ public class Main {
             199.99, "", 5);
 
             Reserva r = new Reserva(c, e, 3, 200, fh);
-
+            Datos.eventos.add(e);
             Factura.crearFactura(r);
+            Datos.guardarTodo();
     } catch (Exception e) {
         System.err.println("Error en el método main: " + e.getMessage());
         e.printStackTrace();
