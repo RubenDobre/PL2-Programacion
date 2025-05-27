@@ -5,11 +5,15 @@
 package poo.javaevents.ventanas;
 
 import java.awt.Font;
+import java.awt.Image;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import poo.javaevents.clases.Buscador;
+import poo.javaevents.clases.Cliente;
 import poo.javaevents.clases.Datos;
 import poo.javaevents.clases.Direccion;
 import poo.javaevents.clases.Evento;
@@ -25,6 +29,16 @@ public class BusquedaEventos extends javax.swing.JFrame {
      */
     public BusquedaEventos() {
         initComponents();
+        
+        // Ajustar el tamaño de la foto del botón de buscar
+        
+        String ruta = "/imagenes/lupa.png";
+        
+        ImageIcon icono = new ImageIcon(getClass().getResource(ruta)); // Obtener icono
+        Image imagenOriginal = icono.getImage(); // Obtener su imagen
+        Image imagenEscalada = imagenOriginal.getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Escalar
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada); // Volver a transformar a icono
+        botonBuscar.setIcon(iconoEscalado);
 
         Datos.eventos.add(new Evento(
                 "Concierto de Coldplay",
@@ -35,7 +49,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
                         LocalDateTime.of(2025, 6, 21, 21, 0)
                 )),
                 75.50,
-                "/src/main/recursos/imagenes/coldplay.jpg",
+                "/imagenes/coldplay.jpg",
                 4.8
         ));
 
@@ -108,10 +122,20 @@ public class BusquedaEventos extends javax.swing.JFrame {
         // Crear un modelo DefaultTableModel para poder añadir filas
         DefaultTableModel modelo = new DefaultTableModel(
                 new Object[]{"Título", "Tipo", "Ciudad"}, 0
-        );
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Ninguna celda editable
+            }
+        };
 
         // Aplicar el modelo a la tabla creada
         tablaEventos.setModel(modelo);
+        
+        // Hacer que se pueda elejir solo una fila a la vez
+        tablaEventos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        tablaEventos.setShowGrid(false);
         
         // Hacer las filas más altas y la fuente más grande
         tablaEventos.setRowHeight(30);
@@ -177,6 +201,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
             }
         });
 
+        botonBuscar.setBorder(null);
         botonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonBuscarActionPerformed(evt);
@@ -227,12 +252,12 @@ public class BusquedaEventos extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addComponent(JavaEvents)
                 .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(campoBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(etiquetaBuscarPor)
-                        .addComponent(tipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(botonBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
                 .addComponent(etiquetaFiltro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -256,7 +281,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
 
         // Borrar la lista de eventosEncontrados para llenarla con los nuevos
         eventosEncontrados.clear();
-        
+
         // Añadir los eventos encontrados
         switch (filtro) {
             case "Título":
@@ -268,13 +293,13 @@ public class BusquedaEventos extends javax.swing.JFrame {
                 eventosEncontrados = Buscador.buscarPorTipo(campoBuscador.getText());
                 etiquetaFiltro.setText("Filtro: Tipo");
                 break;
-                
+
             case "Ciudad":
                 eventosEncontrados = Buscador.buscarPorCiudad(campoBuscador.getText());
                 etiquetaFiltro.setText("Filtro: Ciudad");
                 break;
         }
-        
+
         // Añadir de nuevo los eventos a la tabla
         for (Evento e : eventosEncontrados) {
             Object[] fila = {
@@ -284,7 +309,7 @@ public class BusquedaEventos extends javax.swing.JFrame {
             };
 
             modelo.addRow(fila);
-                    
+
         }
     }//GEN-LAST:event_botonBuscarActionPerformed
 
@@ -295,39 +320,43 @@ public class BusquedaEventos extends javax.swing.JFrame {
     private void botonDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDetallesActionPerformed
         // Obtener el modelo de la tabla
         DefaultTableModel modelo = ((DefaultTableModel) tablaEventos.getModel());
-        
+
         // Ver cual es el evento que tiene elejido el usuario
         int filaElejida = tablaEventos.getSelectedRow(); // Fila seleccionada
         eventoElejido = eventosEncontrados.get(filaElejida);
-        
+
         // Crear una ventana que muestre los detalles del evento
         DetallesEvento detallesEvento = new DetallesEvento();
         detallesEvento.setLocationRelativeTo(this);
         detallesEvento.setVisible(true);
-        
+
         // Modificar los atributos de la ventana para que correspondan a los
         // elementos del evento seleccionado
         detallesEvento.setEtiquetaTitulo(eventoElejido.getTitulo());
-        
+
         detallesEvento.setEtiquetaTipoEvento(eventoElejido.getTipo());
-        
+
         String calle = eventoElejido.getDireccion().getCalle();
         int numero = eventoElejido.getDireccion().getNumero();
         String ciudad = eventoElejido.getDireccion().getCiudad();
         int codPostal = eventoElejido.getDireccion().getCodPostal();
-        detallesEvento.setEtiquetaAtributosDireccion("Calle: " + calle + ", " +
-                numero + ". " + "Ciudad: " + ciudad + ", " + codPostal);
-        
+        detallesEvento.setEtiquetaAtributosDireccion("Calle: " + calle + ", "
+                + numero + ". " + "Ciudad: " + ciudad + ", " + codPostal);
+
         detallesEvento.setHorarios(eventoElejido.getFechasYHoras());
-        
-        try { 
+
+        detallesEvento.setPrecio(eventoElejido.getPrecioEntrada());
+
+        try {
             detallesEvento.setImagen(eventoElejido.getPortada());
         } catch (Exception e) {
-            System.out.println("LA IMAGEN ESTÁ MAL");
+            System.out.println("Imagen no encontrada");
+            detallesEvento.imagenNoEncontrada();
         }
-        
+
         detallesEvento.setEventoElejido(eventoElejido);
-        System.out.println("be" + eventoElejido);
+        
+        detallesEvento.setCliente(clienteActual);
     }//GEN-LAST:event_botonDetallesActionPerformed
 
     /**
@@ -364,13 +393,18 @@ public class BusquedaEventos extends javax.swing.JFrame {
             }
         });
     }
-    
+
     public Evento getEventoElejido() {
         return eventoElejido;
+    }
+    
+    public void setCliente(Cliente cliente) {
+        this.clienteActual = cliente;
     }
 
     private ArrayList<Evento> eventosEncontrados;
     private Evento eventoElejido;
+    private Cliente clienteActual;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JavaEvents;
     private javax.swing.JButton botonBuscar;

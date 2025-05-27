@@ -247,10 +247,10 @@ public class Login extends javax.swing.JFrame {
 
             }
 
-            /* 
-            Mira si el cliente actual es igual a la longitud de la lista de 
-            clientes. Si lo es, no hay ningun cliente con el correo introducido.
-            */
+            
+            // Mira si el cliente actual es igual a la longitud de la lista de 
+            // clientes. Si lo es, no hay ningun cliente con el correo introducido.
+            
 
             if (clienteActual == Datos.clientes.size()) {
                 correoIncorrecto.setVisible(true);
@@ -259,6 +259,7 @@ public class Login extends javax.swing.JFrame {
 
                 if (clienteEncontrado.getClave().equals(textoClave)) {
                     BusquedaEventos busquedaEventos = new BusquedaEventos();
+                    busquedaEventos.setCliente(clienteEncontrado);
                     
                     busquedaEventos.setVisible(true);
                 } else {

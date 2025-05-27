@@ -6,6 +6,7 @@ package poo.javaevents.ventanas;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import poo.javaevents.clases.Evento;
 import poo.javaevents.clases.Resenia;
 
@@ -58,12 +59,14 @@ public class EscribirResenia extends javax.swing.JFrame {
         rBoton4 = new javax.swing.JRadioButton();
         rBoton5 = new javax.swing.JRadioButton();
         botonPublicar = new javax.swing.JButton();
+        botonCancelar = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         JavaEvents.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         JavaEvents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -128,6 +131,13 @@ public class EscribirResenia extends javax.swing.JFrame {
             }
         });
 
+        botonCancelar.setText("Cancelar");
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,7 +149,10 @@ public class EscribirResenia extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonPublicar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(botonPublicar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonCancelar))
                     .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(etiquetaCalificacion)
@@ -179,7 +192,9 @@ public class EscribirResenia extends javax.swing.JFrame {
                     .addComponent(rBoton4)
                     .addComponent(rBoton5))
                 .addGap(61, 61, 61)
-                .addComponent(botonPublicar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonPublicar)
+                    .addComponent(botonCancelar))
                 .addGap(55, 55, 55))
         );
 
@@ -217,6 +232,12 @@ public class EscribirResenia extends javax.swing.JFrame {
         
         setVisible(false);
     }//GEN-LAST:event_botonPublicarActionPerformed
+
+    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
+        ventanaAnterior.setVisible(true);
+        
+        this.dispose();
+    }//GEN-LAST:event_botonCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,11 +278,17 @@ public class EscribirResenia extends javax.swing.JFrame {
     public void setEventoElejido(Evento evento) {
         this.eventoElejido = evento;
     }
+    
+    public void ventanaAnterior(JFrame ventana) {
+        this.ventanaAnterior = ventana;
+    }
 
     private int calificacion;
     private Evento eventoElejido;
+    private JFrame ventanaAnterior;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JavaEvents;
+    private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonPublicar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel etiquetaCalificacion;

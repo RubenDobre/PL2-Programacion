@@ -12,6 +12,7 @@ public class Datos {
 
     public static ArrayList<Cliente> clientes = new ArrayList<>();
     public static ArrayList<Evento> eventos = new ArrayList<>();
+    public static ArrayList<Reserva> reservas = new ArrayList<>();
     
     // Métodos para guardar los datos de los ArrayList
     
@@ -39,15 +40,16 @@ public class Datos {
         }
     }
     
-    // Métodos para cargar o guardar todo a la vez
-    public static void guardarTodo() {
-        guardarClientes();
-        guardarEventos();
-    }
-
-    public static void cargarTodo() {
-        cargarClientes();
-        cargarEventos();
+    public static void guardarReservas() {
+        try {
+            FileOutputStream fos = new FileOutputStream("reservas.dat");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(reservas);
+            oos.close();
+        } catch (IOException e) {
+            System.out.println("Error al guardar reservas: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
     
     // Métodos para cargar los datos serializados
@@ -75,10 +77,39 @@ public class Datos {
             eventos = (ArrayList<Evento>) ois.readObject();
             ois.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Archivo eventos.dat no encontrado, se iniciará vacío.");
+            System.out.println("Archivo eventos.dat no encontrado." 
+                    + "No se han podido cargar los datos");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error al cargar eventos: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+    
+    public static void cargarReservas() {
+        try {
+            FileInputStream fis = new FileInputStream("reservas.dat");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            reservas = (ArrayList<Reserva>) ois.readObject();
+            ois.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo eventos.dat no encontrado."  
+                    + "No se han podido cargar los datos");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al cargar eventos: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    // Métodos para cargar o guardar todo a la vez
+    public static void guardarTodo() {
+        guardarClientes();
+        guardarEventos();
+        guardarReservas();
+    }
+
+    public static void cargarTodo() {
+        cargarClientes();
+        cargarEventos();
+        cargarReservas();
     }
 }

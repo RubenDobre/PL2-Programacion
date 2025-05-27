@@ -4,11 +4,13 @@
  */
 package poo.javaevents.ventanas;
 
+import java.awt.Image;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import poo.javaevents.clases.Cliente;
 import poo.javaevents.clases.Evento;
 
 /**
@@ -41,24 +43,29 @@ public class DetallesEvento extends javax.swing.JFrame {
         etiquetaAtributosDireccion = new javax.swing.JLabel();
         etiquetaHorarios = new javax.swing.JLabel();
         horarios = new javax.swing.JComboBox<>();
-        etiquetaImagen = new javax.swing.JLabel();
+        imagen = new javax.swing.JLabel();
         botonComprar = new javax.swing.JButton();
         botonResenia = new javax.swing.JButton();
+        etiquetaPrecioEntrada = new javax.swing.JLabel();
+        etiquetaPrecio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         JavaEvents.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         JavaEvents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JavaEvents.setText("JavaEvents");
 
-        etiquetaTitulo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etiquetaTitulo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         etiquetaTitulo.setText("Título evento");
 
+        etiquetaTipoEvento.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         etiquetaTipoEvento.setText("Tipo evento");
 
-        etiquetaDireccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etiquetaDireccion.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         etiquetaDireccion.setText("Dirección");
 
+        etiquetaAtributosDireccion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         etiquetaAtributosDireccion.setText("Calle, numero. Ciudad, código postal");
 
         etiquetaHorarios.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -66,9 +73,14 @@ public class DetallesEvento extends javax.swing.JFrame {
 
         horarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        etiquetaImagen.setText("Imagen");
+        imagen.setText("Imagen");
 
         botonComprar.setText("Comprar entradas");
+        botonComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonComprarActionPerformed(evt);
+            }
+        });
 
         botonResenia.setText("Escribir reseña");
         botonResenia.addActionListener(new java.awt.event.ActionListener() {
@@ -76,6 +88,12 @@ public class DetallesEvento extends javax.swing.JFrame {
                 botonReseniaActionPerformed(evt);
             }
         });
+
+        etiquetaPrecioEntrada.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etiquetaPrecioEntrada.setText("Precio de entrada");
+
+        etiquetaPrecio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        etiquetaPrecio.setText("Precio");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,7 +110,6 @@ public class DetallesEvento extends javax.swing.JFrame {
                                 .addGap(65, 65, 65)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(horarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(etiquetaHorarios)
                                     .addComponent(etiquetaDireccion)
                                     .addComponent(etiquetaTitulo)
                                     .addComponent(etiquetaTipoEvento)
@@ -100,11 +117,17 @@ public class DetallesEvento extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(botonComprar)
                                         .addGap(18, 18, 18)
-                                        .addComponent(botonResenia))))
+                                        .addComponent(botonResenia))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(etiquetaHorarios)
+                                        .addGap(67, 67, 67)
+                                        .addComponent(etiquetaPrecioEntrada)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(etiquetaPrecio))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(255, 255, 255)
-                                .addComponent(etiquetaImagen)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(imagen)))
+                        .addGap(0, 97, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -121,11 +144,15 @@ public class DetallesEvento extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(etiquetaAtributosDireccion)
                 .addGap(18, 18, 18)
-                .addComponent(etiquetaHorarios)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(etiquetaPrecioEntrada)
+                        .addComponent(etiquetaPrecio))
+                    .addComponent(etiquetaHorarios))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(horarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(etiquetaImagen)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                .addComponent(imagen)
                 .addGap(179, 179, 179)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botonComprar)
@@ -140,11 +167,26 @@ public class DetallesEvento extends javax.swing.JFrame {
     private void botonReseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReseniaActionPerformed
         EscribirResenia ventanaResenia = new EscribirResenia();
         ventanaResenia.setEventoElejido(eventoElejido);
-        System.out.println("de" + eventoElejido);
-        
+        ventanaResenia.ventanaAnterior(this);
+
         this.setVisible(false);
         ventanaResenia.setVisible(true);
     }//GEN-LAST:event_botonReseniaActionPerformed
+
+    private void botonComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonComprarActionPerformed
+        CompraEntradas compraEntradas = new CompraEntradas();
+
+        compraEntradas.setEventoElejido(eventoElejido);
+        compraEntradas.setCliente(clienteActual);
+        compraEntradas.setHorarios(eventoElejido.getFechasYHoras());
+        compraEntradas.setPrecioEntrada(eventoElejido.getPrecioEntrada());
+        compraEntradas.setPrecioTotal();
+
+        compraEntradas.ventanaAnterior(this);
+
+        this.setVisible(false);
+        compraEntradas.setVisible(true);
+    }//GEN-LAST:event_botonComprarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,7 +214,7 @@ public class DetallesEvento extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DetallesEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -182,7 +224,6 @@ public class DetallesEvento extends javax.swing.JFrame {
     }
 
     // Métodos para cambiar los elementos con la información del evento elejido
-    
     public void setEtiquetaTitulo(String texto) {
         etiquetaTitulo.setText(texto);
     }
@@ -196,28 +237,58 @@ public class DetallesEvento extends javax.swing.JFrame {
     }
 
     public void setHorarios(ArrayList<LocalDateTime> listaHorarios) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
         ArrayList<String> opcionesFormateadas = new ArrayList<>();
         for (LocalDateTime fecha : listaHorarios) {
-            opcionesFormateadas.add(fecha.format(formatter));
+            opcionesFormateadas.add(fecha.format(formato));
         }
 
         horarios.setModel(new DefaultComboBoxModel<>(opcionesFormateadas.toArray(new String[0])));
     }
 
-    public void setImagen(String ruta) {
-        etiquetaImagen.setText("");
+    public void setPrecio(double precio) {
+        etiquetaPrecio.setText(precio + " €");
+    }
 
-        ImageIcon icono = new javax.swing.ImageIcon(getClass().getResource(ruta));
-        etiquetaImagen.setIcon(icono);
+    public void setImagen(String ruta) {
+        ImageIcon icono = new ImageIcon(getClass().getResource(ruta));
+        Image imagenOriginal = icono.getImage();
+        Image imagenEscalada = imagenOriginal.getScaledInstance(256, 256, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+
+        imagen.setIcon(iconoEscalado);
+        imagen.setText("");
+
+        setLayout(null); // cambiar layout del JFrame para poder mover la imagen
+        imagen.setBounds(135, 300, 256, 256); // x, y, ancho, alto
+        add(imagen); // añadir el JLabel al JFrame de la ventana
     }
     
+    public void imagenNoEncontrada() {
+        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenes/imagen_no_encontrada.png"));
+        Image imagenOriginal = icono.getImage();
+        Image imagenEscalada = imagenOriginal.getScaledInstance(256, 256, Image.SCALE_SMOOTH);
+        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+
+        imagen.setIcon(iconoEscalado);
+        imagen.setText("");
+
+        setLayout(null); // cambiar layout del JFrame para poder mover la imagen
+        imagen.setBounds(135, 300, 256, 256); // x, y, ancho, alto
+        add(imagen); // añadir el JLabel al JFrame de la ventana
+    }
+
     public void setEventoElejido(Evento evento) {
         this.eventoElejido = evento;
     }
 
+    public void setCliente(Cliente cliente) {
+        this.clienteActual = cliente;
+    }
+
     private Evento eventoElejido;
+    private Cliente clienteActual;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JavaEvents;
     private javax.swing.JButton botonComprar;
@@ -225,9 +296,11 @@ public class DetallesEvento extends javax.swing.JFrame {
     private javax.swing.JLabel etiquetaAtributosDireccion;
     private javax.swing.JLabel etiquetaDireccion;
     private javax.swing.JLabel etiquetaHorarios;
-    private javax.swing.JLabel etiquetaImagen;
+    private javax.swing.JLabel etiquetaPrecio;
+    private javax.swing.JLabel etiquetaPrecioEntrada;
     private javax.swing.JLabel etiquetaTipoEvento;
     private javax.swing.JLabel etiquetaTitulo;
     private javax.swing.JComboBox<String> horarios;
+    private javax.swing.JLabel imagen;
     // End of variables declaration//GEN-END:variables
 }

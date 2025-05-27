@@ -63,13 +63,13 @@
               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               <Component id="JavaEvents" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="botonBuscar" min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="campoBuscador" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="etiquetaBuscarPor" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="tipoBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="botonBuscar" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Component id="etiquetaFiltro" min="-2" max="-2" attributes="0"/>
@@ -159,6 +159,11 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="botonBuscar">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonBuscarActionPerformed"/>
       </Events>
