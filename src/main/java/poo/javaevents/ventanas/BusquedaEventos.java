@@ -39,6 +39,26 @@ public class BusquedaEventos extends javax.swing.JFrame {
         Image imagenEscalada = imagenOriginal.getScaledInstance(20, 20, Image.SCALE_SMOOTH); // Escalar
         ImageIcon iconoEscalado = new ImageIcon(imagenEscalada); // Volver a transformar a icono
         botonBuscar.setIcon(iconoEscalado);
+        
+        // Hacer lo mismo para el botón de perfil del usuario
+        
+        ruta = "/imagenes/perfil1.png";
+        
+        icono = new ImageIcon(getClass().getResource(ruta)); // Obtener icono
+        imagenOriginal = icono.getImage(); // Obtener su imagen
+        imagenEscalada = imagenOriginal.getScaledInstance(35, 35, Image.SCALE_REPLICATE); // Escalar
+        iconoEscalado = new ImageIcon(imagenEscalada); // Volver a transformar a icono
+        botonPerfil.setIcon(iconoEscalado);
+        
+        // Imagen del botón de reservas
+        
+        ruta = "/imagenes/reserva.png";
+        
+        icono = new ImageIcon(getClass().getResource(ruta)); // Obtener icono
+        imagenOriginal = icono.getImage(); // Obtener su imagen
+        imagenEscalada = imagenOriginal.getScaledInstance(35, 35, Image.SCALE_REPLICATE); // Escalar
+        iconoEscalado = new ImageIcon(imagenEscalada); // Volver a transformar a icono
+        botonReserva.setIcon(iconoEscalado);
 
         Datos.eventos.add(new Evento(
                 "Concierto de Coldplay",
@@ -119,9 +139,10 @@ public class BusquedaEventos extends javax.swing.JFrame {
                 4.6
         ));
 
-        // Crear un modelo DefaultTableModel para poder añadir filas
+        // Crear un modelo DefaultTableModel con celdas no editables
+        
         DefaultTableModel modelo = new DefaultTableModel(
-                new Object[]{"Título", "Tipo", "Ciudad"}, 0
+                new Object[]{"Título", "Tipo", "Ciudad"}, 0 // Títulos de cada columna y número inicial de filas
         ) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -175,6 +196,10 @@ public class BusquedaEventos extends javax.swing.JFrame {
         botonBuscar = new javax.swing.JButton();
         etiquetaFiltro = new javax.swing.JLabel();
         botonDetalles = new javax.swing.JButton();
+        botonPerfil = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        botonReserva = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -201,7 +226,6 @@ public class BusquedaEventos extends javax.swing.JFrame {
             }
         });
 
-        botonBuscar.setBorder(null);
         botonBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonBuscarActionPerformed(evt);
@@ -217,14 +241,28 @@ public class BusquedaEventos extends javax.swing.JFrame {
             }
         });
 
+        botonPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        botonPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonPerfilActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Ver perfil");
+
+        botonReserva.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        botonReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonReservaActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Ver reservas");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JavaEvents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(139, 139, 139)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,11 +283,37 @@ public class BusquedaEventos extends javax.swing.JFrame {
                             .addComponent(etiquetaFiltro)
                             .addComponent(botonDetalles, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JavaEvents, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botonReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(botonPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(botonReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JavaEvents)
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,13 +328,21 @@ public class BusquedaEventos extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botonDetalles)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método que busca dentro de los eventos guardados aquellos que contienen
+     * el texto introducido por el usuario. La búsqueda se hace en el atributo
+     * de título, tipo o ciudad (dentro de dirección) del evento, dependiendo
+     * del filtro que el usuario elija.
+     * 
+     * @param evt 
+     */
     private void botonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarActionPerformed
         // Obtener el modelo de la tabla y borrar todas las filas
         DefaultTableModel modelo = ((DefaultTableModel) tablaEventos.getModel());
@@ -317,6 +389,14 @@ public class BusquedaEventos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tipoBusquedaActionPerformed
 
+    /**
+     * Método que crea y abre una ventana con los detalles del evento que el
+     * usuario tiene seleccionado al pulsar sobre el botón "Ver detalles".
+     * Despúes, ajusta ciertas etiquetas de la ventana para coincidir con la
+     * información del evento.
+     * 
+     * @param evt 
+     */
     private void botonDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDetallesActionPerformed
         // Obtener el modelo de la tabla
         DefaultTableModel modelo = ((DefaultTableModel) tablaEventos.getModel());
@@ -358,6 +438,17 @@ public class BusquedaEventos extends javax.swing.JFrame {
         
         detallesEvento.setCliente(clienteActual);
     }//GEN-LAST:event_botonDetallesActionPerformed
+
+    private void botonPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPerfilActionPerformed
+        Perfil perfil = new Perfil();
+        perfil.setCliente(clienteActual);
+        perfil.modificarDatos();
+        perfil.setVisible(true);
+    }//GEN-LAST:event_botonPerfilActionPerformed
+
+    private void botonReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReservaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonReservaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -409,9 +500,13 @@ public class BusquedaEventos extends javax.swing.JFrame {
     private javax.swing.JLabel JavaEvents;
     private javax.swing.JButton botonBuscar;
     private javax.swing.JButton botonDetalles;
+    private javax.swing.JButton botonPerfil;
+    private javax.swing.JButton botonReserva;
     private javax.swing.JTextField campoBuscador;
     private javax.swing.JLabel etiquetaBuscarPor;
     private javax.swing.JLabel etiquetaFiltro;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaEventos;
     private javax.swing.JComboBox<String> tipoBusqueda;

@@ -35,7 +35,6 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="horarios" min="-2" max="-2" attributes="0"/>
                                   <Component id="etiquetaDireccion" min="-2" max="-2" attributes="0"/>
                                   <Component id="etiquetaTitulo" min="-2" max="-2" attributes="0"/>
                                   <Component id="etiquetaTipoEvento" min="-2" max="-2" attributes="0"/>
@@ -52,6 +51,7 @@
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="etiquetaPrecio" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="horarios" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">

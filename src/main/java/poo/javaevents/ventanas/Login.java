@@ -229,7 +229,9 @@ public class Login extends javax.swing.JFrame {
         
         if (textoCorreo.equals("admin@javaevents.com") && 
                 textoClave.equals("admin")) {
-            System.out.println("ABRIR VENTANA SIGUIENTE MODO ADMIN");
+            Admin ventanaAdmin = new Admin();
+            ventanaAdmin.setVisible(true);
+            this.dispose();
         }
         
         else {
@@ -262,6 +264,7 @@ public class Login extends javax.swing.JFrame {
                     busquedaEventos.setCliente(clienteEncontrado);
                     
                     busquedaEventos.setVisible(true);
+                    this.dispose();
                 } else {
                     claveIncorrecta.setVisible(true);
                 }
